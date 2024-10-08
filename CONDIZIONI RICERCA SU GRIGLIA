@@ -1,0 +1,6 @@
+ CONDIZIONI RICERCA SU GRIGLIA
+
+la corretta atmosfera tra quelle nella griglia di Castelli si è utilizzato un approccio più empirico. Infatti la larghezza della maglia della griglia implica che per alcune stelle è impossibile ottenere le condizioni richieste nel paragrafo precedente.
+Analogamente al caso delle atmosfere interpolate si sono create delle liste, queste liste vengono riempite dalle atmosfere che soddisfano la seguente condizione $Y<0.1$, $F<0.01$, $s<0.005$.
+Se nessuna atmosfera soddisfa questa condizione si aggiorna a $Y<0.18$, $F<0.05$, $s<0.007$, allo stesso modo se nessuna atmosfera soddisfa questa condizione si aggiorna ulteriormente variando la richiesta su $Y$ da $\delta Y = 0.08$ in avanti a passi di $0.01$,
+su $s$ da $\delta s = 0.002$ in avanti a passi di $0.001$ e su $F$ da $\delta F = 0.04$ in avanti a passi di $0.005$. In questo modo si riproduce la selezione della atmosfera come fatta manualmente.
