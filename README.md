@@ -49,4 +49,4 @@ re
 time
 urllib3
 
-The urllib3 library is used only in the scraping functions, you can comment it if you won't going to use it.
+The urllib3 library is used only in the scraping functions, you can comment it if you're not going to use it.
