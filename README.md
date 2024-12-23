@@ -9,7 +9,7 @@ Sbundance is a jupyter notebook meant to perform automatic spectral analysis of 
  - ARES
 *as for the spectrum folder while all the main features of spectrum programs the codes are untouched a little bit of them was rewritten mostly, if not solely, to manage the input and the outputs in an automatic fashion. Aside from abundance.c and spectrum.c (which now have their own parameter file to handle inputs) also spaux.c had minor modification, namely the ggets() function. So while you could download the original spectrum files and them make your own minor changes, it is way easier for you to just grab the properly modified files from here.
 
-If everything is set up and installed you should now have open you jupyter notebook and open sbundance.
+If everything is set up and installed you open your jupyter notebook and open sbundance.
 - Before running any cells you should set your computer's paths in the first cell. From path_to_pythonEnv=... to path_to_spectrum=... you should enter the paths present on YOUR machine. The names should be self explanatory, there are also comments in the notebook to help ;).
 - Run the first cell which contains all the basic functions needed.
 - Run the third block (for the second block look below at PERFORMING A CONTINUOUS SEARCH***)
