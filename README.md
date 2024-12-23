@@ -2,7 +2,7 @@ Sbundance is a jupyter notebook meant to perform automatic spectral analysis of 
  Its main features are the stellar parameter space exploration in order to obtain the right stellar atmosphere to apply to the analysis. In order to do so it integrates three other codes, namely abundance, a SPECTRUM routine by R. Gray, ARES by S. Sousa and PyKMOD, by the github user kolecki. Then it uses a gradient-descent (with a random search spin!) like approach to find the absolute minima of the parameter space.
 
  The way it's meant to be used is the following:
- 
+ ---
  Download all the files needed:
  - the latest version of sbundance
  - the pykmod by kolecki
@@ -11,17 +11,21 @@ Sbundance is a jupyter notebook meant to perform automatic spectral analysis of 
 *as for the spectrum folder while all the main features of spectrum programs the codes are untouched a little bit of them was rewritten mostly, if not solely, to manage the input and the outputs in an automatic fashion. Aside from abundance.c and spectrum.c (which now have their own parameter file to handle inputs) also spaux.c had minor modification, namely the ggets() function. So while you could download the original spectrum files and them make your own minor changes, it is way easier for you to just grab the properly modified files from here.
 
 If everything is set up and installed you open your jupyter notebook and open sbundance.
-
+---
 - Before running any cells you should set your computer's paths in the first cell. From path_to_pythonEnv=... to path_to_spectrum=... you should enter the paths present on YOUR machine. The names should be self explanatory, there are also comments in the notebook to help ;). 
 - Run the first cell which contains all the basic functions needed.
 - Run the third block (for the second block look below at PERFORMING A CONTINUOUS SEARCH***)
   
 
- The third block defines a Stella class. This eats a fits file (equipped with a spectrum) and create a Stella object containing a variety of useful info and functions. When a star=Stella('file.fit') is defined a folder in the output directory is created with the name of the star contained in the fits file. You have the basic atmospherical parameters as star.t_eff, star.logg, star.metal, star.v_m. As of today (23/12/24) the code is meant to use HARPS-N fits data, this means that you may need to adjust some functions in order to account for different headers name in different fits file (e.g. for the HARPS-N fits the name of the star is under the header "HIERARCH TNG OBS TARG NAME" and is not always like that).
- 
- HARPS-N automatically provide a radial velocity estimate, which is automatically loaded in the star.v_r position, which you can set manually anyway. 
-Available methods are:
+ The third block defines a Stella class. 
+ ---
+ This eats a fits file (equipped with a spectrum) and create a Stella object containing a variety of useful info and functions. When a star=Stella('file.fit') is defined a folder in the output directory is created with the name of the star contained in the fits file. You have the basic atmospherical parameters as star.t_eff, star.logg, star.metal, star.v_m.
 
+ As of today (23/12/24) the code is meant to use HARPS-N fits data, this means that you may need to adjust some functions in order to account for different headers name in different fits file (e.g. for the HARPS-N fits the name of the star is under the header "HIERARCH TNG OBS TARG NAME" and is not always like that).
+ HARPS-N automatically provide a radial velocity estimate, which is automatically loaded in the star.v_r position, which you can set manually anyway. 
+
+Available methods are:
+--
 .spectrum() - this display the spectral data contained in the fits file
 
 .dopcor() - this corrects for doppler shift, using the value of star.v_r
