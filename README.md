@@ -56,6 +56,13 @@ that would set s, F, Y, S to 0 if the I order was exact (but it's not and it is 
 
  
 It is probably more sensible to drop the random search part until we can be sure we're near the global minimum. This way one can allow for more seeds, say, 12 seeds to run separately and only when one gets comfortably close to the global minimum (ie M<1/0.5) redirect all the cores to a random-ish search in the global minimum neighborhood. This would help in avoiding getting stuck in local minima.
+
+On a cold rainy night..
+----
+ Say a friend of friends, Peppe Panella, is a sleepwalker and lives near the woods which is notoriously a place where "hic sunt leones". It's a cold rainy sunday night and you need to save him to make your friend, Ugo Bugo, happy. Living in a capitalistic world the chances of survival of Peppe crucially depend on the amount of money YOU have, thus how many private investigators you can afford to hire (the cores). The plan is simple, we know where he lives, he cannot be that far away (we know it's a red giant). Unfortunately the rain washed away Peppe's tracks in the open fields in front of the woods so everyone enters the woods from different places (someone even dropped off an helicopter in the middle of the woods!). Eventually detectives start to find tracks below the thick leaves and start following them (gradient descent), but the rain washed away some of those leaving couple of rescuers running in circle for 10 minutes. The detective who dropped off the helicopter though seems on a good run and following tracks he eventually find a pair of socks! "Surely! They're his! He must be close as one does not simply walk without a sock!" - he shouts, everyone came running and start looking for Peppe. Eventually they find him. Except it's not actually him, not necessarily. You see one important point I is that you don't really know Peppe Panella. Moreover there's like a multitude of Peppe Panella's look alike, all living near the woods and all being sleepwalker. So what you actually do is finding the Peppe Panella that most resemble a polaroid picture of Peppe. This is done thanks to a device called the Peppèmetro. Well this Peppe you found has a value of 0.1 in the Peppèmetro, you notice that the heights corresponds and his haircut also, though a mole on his cheeks betray some differences...
+ 
+ it's late in the night now, I guess Ugo Bugo won't even notice...
+
  
 ///OLD VERSIONS
  The analysis comes in two flavour, a grid search on a discretized parameter space (making use of pre-computed ATLAS9 stellar atmospheres provided by F. Castelli) and a search in the continuous parameter space, created by interpolation by the means of the code PyKMOD.
