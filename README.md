@@ -58,8 +58,6 @@ A good way to use .searchParam2() is to first launch it with 10\15 trials (TRIAL
  -------------
  UPDATES ON searchParams with the NLTE flag: the code has a hard time converging. I would suggest not to use them, just apply them one time once the LTE params are found.
 
- 
-It is probably more sensible to drop the random search part until we can be sure we're near the global minimum. This way one can allow for more seeds, say, 12 seeds to run separately and only when one gets comfortably close to the global minimum (ie M<1/0.5) redirect all the cores to a random-ish search in the global minimum neighborhood. This would help in avoiding getting stuck in local minima.
 
 On a cold rainy night..
 ----
