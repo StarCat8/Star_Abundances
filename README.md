@@ -21,8 +21,9 @@ If everything is set up and installed open your jupyter notebook and open sbunda
  ---
  This eats a fits file (equipped with a spectrum) and create a Stella object containing a variety of useful info and functions. When a star=Stella('file.fit') is defined a folder in the output directory is created with the name of the star contained in the fits file. You have the basic atmospherical parameters as star.t_eff, star.logg, star.metal, star.v_m.
 
- As of today (23/12/24) the code is meant to use HARPS-N fits data, this means that you may need to adjust some functions in order to account for different headers name in different fits file (e.g. for the HARPS-N fits the name of the star is under the header "HIERARCH TNG OBS TARG NAME" and is not always like that).
- HARPS-N automatically provide a radial velocity estimate, which is automatically loaded in the star.v_r position, which you can set manually anyway. 
+ As of today (22/01/25) the code is meant to use HARPS-N and FIES fits data, this means that you may need to adjust some functions in order to account for different headers name in different fits file (e.g. for the HARPS-N fits the name of the star is under the header "HIERARCH TNG OBS TARG NAME" and is not always like that).
+ HARPS-N automatically provide a radial velocity estimate, which is automatically loaded in the star.v_r position, which you can set manually anyway.
+ In any case there's now a method "stima_radvel_Ha" that automatically tries to estimates radial velocità from the H-alpha line.
 
 Available methods are:
 --
@@ -64,7 +65,7 @@ On a cold rainy night..
  it's late in the night now, I guess Ugo Bugo won't even notice...
 
  
-///OLD VERSIONS
+///OLD VERSIONS (deprecated)
  The analysis comes in two flavour, a grid search on a discretized parameter space (making use of pre-computed ATLAS9 stellar atmospheres provided by F. Castelli) and a search in the continuous parameter space, created by interpolation by the means of the code PyKMOD.
   To code is meant to work with .fits 1-d spectra where the doppler shift is already removed (future works will provide an automatic way to calculate and remove doppler shift).
 It is structured in a versatile folder structure, hence the user is required to set the folders' path inside the first block of the notebook (e.g. path_to_output), comments in the code are meant to explain which folder is which.
@@ -87,7 +88,7 @@ To code is meant to be versatile and basically every variable can be manually ad
 
 
 
-We suggest for both the grid and the continuous search to provide a line-list containing only FeI and FeII lines, these lines being the only ones used to determine the stellar parameter, since the analysis of many lines may results in long computation time by abundance. 100 lines are usually computed in around 20 to 40 seconds on my machine (which is sadly a very poor one).
+I suggest for both the grid and the continuous search to provide a line-list containing only FeI and FeII lines, these lines being the only ones used to determine the stellar parameter, since the analysis of many lines may results in long computation time by abundance. 100 lines are usually computed in around 20 to 40 seconds on my machine (which is sadly a very poor one).
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 DERIVING STELLAR ABUNDANCES
 
