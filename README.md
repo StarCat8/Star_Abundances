@@ -9,7 +9,7 @@ Sbundance is a jupyter notebook meant to perform automatic spectral analysis of 
  - the spectrum277c folder*
  - ARES
 *as for the spectrum folder while all the main features of spectrum programs the codes are untouched a little bit of them was rewritten mostly, if not solely, to manage the input and the outputs in an automatic fashion. Aside from abundance.c and spectrum.c (which now have their own parameter file to handle inputs) also spaux.c had minor modification, namely the ggets() function. So while you could download the original spectrum files and them make your own minor changes, it is way easier for you to just grab the properly modified files from here.
-
+ Not every folder is necessary, depending on the needs. But I would suggest to create all the folders (i.e. the one referenced in the first lines of the first cell) in any case and specify their path in the first cell (I'm thinking of making an installer that does this).
 If everything is set up and installed open your jupyter notebook and open sbundance.
 ---
 - Before running any cells you should set your computer's paths in the first cell. From path_to_pythonEnv=... to path_to_spectrum=... you should enter the paths present on YOUR machine. The names should be self explanatory, there are also comments in the notebook to help ;). 
@@ -31,7 +31,7 @@ Available methods are:
 
 .dopcor() - this corrects for doppler shift, using the value of star.v_r
 
-.creaModel() - creates an interpolated atmosphere via pykmod and sets up param file for abundance
+.creaModel() - creates an interpolated ATLAS9 atmosphere via pykmod and sets up param file for abundance. Moreover it copies the interpolated model in the "interpolated_atmospheres" folder. This way, with use, already computed models are kept. This way if they need to be applied again they will be ready, speeding up the process. *Consider that if every point in the parameter space was to be computed (4000-5000K, 0-2dex logg, -2-0dex [M/H], 1-3 microturbulence) the all the ATLAS9 interpolated models would take up to 1TB (even if 200GB of them were to be computed there's only a 1/5 chance for it to be used, but still...)
 
 .synth_creaModel() - creates an interpolated atmosphere via pykmod and sets up param file for spectrum, create the stdatom.dat file, which contains the chemical composition of the star.
 
@@ -53,7 +53,10 @@ The search is done via the equivalent width method. This is considered enforced 
  We start with 4 random seed distributed in four different region of the parameter space (and chosen to be as physical as possible, eg to high temp corresponds higher logg), these creates 4 different atmospheres (step 0 atmospheres). Then sbundance create the step 1 atmospheres, which updates the atmospherical parameters (X) according to a previously calibrated matrix. From the 2nd step on the atmospherical parameters are updated according to a matrix created during runtime which is basically the Jacobian the funcions s, F, Y, S expressed as a Ist order taylor expansion in the X variable. Inverting the matrix gives the new X
 that would set s, F, Y, S to 0 if the I order was exact (but it's not and it is an iterative process anyway). If more than 4 cores are given (I usually run this on a 12 cores cpu) 2 more atmospheres per seed are computed, and these are randomly distributed in a 4d sphere around the new X updated via the matrix, with a radius varying according to the distance from the previous atmosphere (ie if the guessed temperature is changed by 50K from the previous one, a radius of 25K is applied). Iterating this process has shown to consistently reduce the value of M and that usually two, and at least one, search branches end up in the global minimum. The metric M is devised as such that when it gets around the value of 1 we can be pretty sure to be in the neighborhood of the global minimum, and when below 0.1-0.05 X is as close to X_true as one can reasonably hope (ie, the change in effective temperature would be less than 1K, in logg less than 0.01 dex as well for [M/H] and in vturb < 0.01). Actually the vturb direction in parameter space could be probably dropped off and just use an analytical formula for it as the Mashonkina one.
  This method also allows the user to insert the contribution of NLTE effects. This comes with some caveats. The biggest of them is how trustworthy the correction I used are (Amarsi 2016 corrections). These one now implemented are computed on a grids with pretty wide meshes, and also the parameter space sbundance is meant to probe is not entirely superimposed to the grid. I extended the grid to continuum values via a first order interpolation, but I'm not entirely sure of the results. Anyway one can easily turn on or off the NLTE corrections via the flag NLTE (=0 for LTE and =1 for NLTE). 
- Incoming changes in .searchParam2():
+
+A good way to use .searchParam2() is to first launch it with 10\15 trials (TRIALS keyword), then launch it again specifying all the initial condition t01, t02, t03, t04, g01, g02 etc... to the .t_eff, .logg, .metal, .v_m, values found in the first run. Usually 10 trials suffice for at least one search branch to find the global minima neighborhood. The second run would then just explore the global minima neighborhood, ignoring the other 3 search branches (which usually get stuck in local minima).
+ -------------
+ UPDATES ON searchParams with the NLTE flag: the code has a hard time converging. I would suggest not to use them, just apply them one time once the LTE params are found.
 
  
 It is probably more sensible to drop the random search part until we can be sure we're near the global minimum. This way one can allow for more seeds, say, 12 seeds to run separately and only when one gets comfortably close to the global minimum (ie M<1/0.5) redirect all the cores to a random-ish search in the global minimum neighborhood. This would help in avoiding getting stuck in local minima.
