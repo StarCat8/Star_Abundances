@@ -1,6 +1,10 @@
 Sbundance is a jupyter notebook meant to perform automatic spectral analysis of K metal poor stars by using the equivalent width method. 
  Its main features are the stellar parameter space exploration in order to obtain the right stellar atmosphere to apply to the analysis. In order to do so it integrates three other codes, namely abundance, a SPECTRUM routine by R. Gray, ARES by S. Sousa and PyKMOD, by the github user kolecki. Then it uses a gradient-descent (with a random search spin!) like approach to find the absolute minima of the parameter space.
 
+After enlightening conversations...
+---
+ (10-02-2025) Major upgrades of the core of the program will happen in the next few weeks. In particular there will be the possibility to choose to either use SPECTRUM suite or TURBOSPECTRUM. Moreover it will be implemented an easy way to compute ATLAS9 atmospheres during runtime. This will probably happen using SYNTHE.
+
  The way it's meant to be used is the following:
  ---
  Download all the files needed:
@@ -56,6 +60,11 @@ that would set s, F, Y, S to 0 if the I order was exact (but it's not and it is 
 
  
 It is probably more sensible to drop the random search part until we can be sure we're near the global minimum. This way one can allow for more seeds, say, 12 seeds to run separately and only when one gets comfortably close to the global minimum (ie M<1/0.5) redirect all the cores to a random-ish search in the global minimum neighborhood. This would help in avoiding getting stuck in local minima.
+
+From the sbundance1.45 version (10-02-25) it is possible to fix the atmospheric parameter for the search. This has no substantial advantages from a computational standpoint (yes the implementation is quite raw but nonetheless the philosopy of the search through a 3x3 matrix inversion instead of a 4x4 matrix wouldn't make a noticeable difference in anycase, considering that most of the time is still spent in radiative transport calculations performed by abundance).
+
+
+
 
 On a cold rainy night..
 ----
