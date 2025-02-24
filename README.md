@@ -1,9 +1,10 @@
 Sbundance is a jupyter notebook meant to perform automatic spectral analysis of K metal poor stars by using the equivalent width method. 
  Its main features are the stellar parameter space exploration in order to obtain the right stellar atmosphere to apply to the analysis. In order to do so it integrates three other codes, namely abundance, a SPECTRUM routine by R. Gray, ARES by S. Sousa and PyKMOD, by the github user kolecki. Then it uses a gradient-descent (with a random search spin!) like approach to find the absolute minima of the parameter space.
 
+
 After enlightening conversations...
 ---
- (10-02-2025) Major upgrades of the core of the program will happen in the next few weeks. In particular there will be the possibility to choose to either use SPECTRUM suite or TURBOSPECTRUM. Moreover it will be implemented an easy way to compute ATLAS9 atmospheres during runtime. This will probably happen using SYNTHE.
+ (10-02-2025) Major upgrades of the core of the program will happen in the next few weeks. In particular there will be the possibility to choose to either use SPECTRUM suite or TURBOSPECTRUM. Moreover it will be implemented an easy way to compute ATLAS9 atmospheres during runtime.
 
  The way it's meant to be used is the following:
  ---
