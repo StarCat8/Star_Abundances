@@ -12,7 +12,9 @@ After enlightening conversations...
  - the latest version of sbundance
  - the pykmod by kolecki
  - the spectrum277c folder*
+ - Turbospectrum2019-master (not the NLTE version that still doesn't seems to support eqwidth method)
  - ARES
+ - Due to some format requirements at least one Kurucz atmosphere is required (even if one is to use the kolecki interpolator. Specifically in the function getTail(T, L, M) you'll see a line going "with open('/home/starcat8/Documenti/sbundance/ANALISIATM/ATMOSFERE/MH-1.0/atmoT45001.5.txt', 'r') as file:" you'll need to change to a path of a Kurucz atmosphere, the ones with headers (the one in Fiorella Castelli websites works i.e. from https://wwwuser.oats.inaf.it/fiorella.castelli/grids/gridm10k2odfnew/am10k2tab.html).
 *as for the spectrum folder while all the main features of spectrum programs the codes are untouched a little bit of them was rewritten mostly, if not solely, to manage the input and the outputs in an automatic fashion. Aside from abundance.c and spectrum.c (which now have their own parameter file to handle inputs) also spaux.c had minor modification, namely the ggets() function. So while you could download the original spectrum files and them make your own minor changes, it is way easier for you to just grab the properly modified files from here.
 
 If everything is set up and installed you open your jupyter notebook and open sbundance.
@@ -28,6 +30,7 @@ If everything is set up and installed you open your jupyter notebook and open sb
 
  As of today (23/12/24) the code is meant to use HARPS-N fits data, this means that you may need to adjust some functions in order to account for different headers name in different fits file (e.g. for the HARPS-N fits the name of the star is under the header "HIERARCH TNG OBS TARG NAME" and is not always like that).
  HARPS-N automatically provide a radial velocity estimate, which is automatically loaded in the star.v_r position, which you can set manually anyway. 
+ Since february 2025 the code also support FIES data. Almost all the functions that requires the use of a fits file will need the have the instrument specified via the argument 'instrument'. i.e. instrument='FIES' or instrument='HARPS-N'
 
 Available methods are:
 --
@@ -43,7 +46,7 @@ Available methods are:
 
 .normalize_spectrum() - this method normalizes the spectrum. In order to do so the following algorithm was applied. Divide the full spectrum in chunks of N_avepoint, say 500 points. The continuum should in principle be around the maximum value of the flux, hence discarding the absorption lines. This was done by iteratively setting all values of intensity below a threshold (given by the intensity average in the chunk) to the value of the threshold itself.  In order to account for upward spikes (eg cosmic rays) values significantly above the average are also discarded. This leaves with value fluctuating around the continuum. Of these points the max are chosen, and then averaged with a moving averaging window of customizable dimension (default is 15). Eventually the point are slightly shifted down by a value comparable to half of the variance. This fairly normalizes the spectrum, namely peaks and troughs are excluded by the averaging, but surely more work is needed
 
-.synth() - this method create a syntetic spectrum. It accepts a plethora of arguments, from initial to final wavelenght, to the integration step, which cpu to use, which value of vsini to use to rotationally broaden the lines. All the elements from H to U can be changed (make sure to set their abundances according to the prescription reported in the spectrum documentation, i.e. the metal abundances scales with the [M/H] value). The defaul values are solar abundances. To set an abundance just pass the element as an argument with its abundance, eg star.synth(..., Na=-5.32, ...). This method produces a synthetic spectrum saved in the star.folder directory (ie the "path_to_output + star.nome" folder) with .synstar extension. If "broad" is also a suffix the spectrum was broadened with avsini.
+.synth() - this method create a synthetic spectrum. It accepts a plethora of arguments, from initial to final wavelenght, to the integration step, which cpu to use, which value of vsini to use to rotationally broaden the lines. All the elements from H to U can be changed (make sure to set their abundances according to the prescription reported in the spectrum documentation, i.e. the metal abundances scales with the [M/H] value). The defaul values are solar abundances. To set an abundance just pass the element as an argument with its abundance, eg star.synth(..., Na=-5.32, ...). This method produces a synthetic spectrum saved in the star.folder directory (ie the "path_to_output + star.nome" folder) with .synstar extension. If "broad" is also a suffix the spectrum was broadened with avsini.
 
 .avsini() - this method just calls the avsini code in spectrum to broaden the lines to account for rotational effects.
 
@@ -64,8 +67,9 @@ It is probably more sensible to drop the random search part until we can be sure
 
 From the sbundance1.45 version (10-02-25) it is possible to fix the atmospheric parameter for the search. This has no substantial advantages from a computational standpoint (yes the implementation is quite raw but nonetheless the philosopy of the search through a 3x3 matrix inversion instead of a 4x4 matrix wouldn't make a noticeable difference in anycase, considering that most of the time is still spent in radiative transport calculations performed by abundance).
 
-
-
+*** .searchParam3() is the latest iteration... ***
+-------
+ Now the new searchParam3() iteration exists. This one support Turbospectrum (and also spectrum). If you're planning to just use spectrum, which is much faster by the way, you can either use searchParam2 or searchParam3, in the latter case you have to specify which of the two between spectrum or turbospectrum you're using, passing to the function the argument radSolver = 'spectrum' or radSolver = 'turbo'.
 
 On a cold rainy night..
 ----
